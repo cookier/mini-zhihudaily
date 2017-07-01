@@ -27,4 +27,10 @@
   <picker mode="date" start="2013-05-20" end="2017-09-01" bindchange="bindDateChange">
     <view class="picker-toggle"> 日历 </view>
   </picker>
+  <picker mode="date" start="2013-05-20" end="2017-09-01" bindchange="bindDateChange">
+    <text animation="{{animationcollect}}" class="image-style" bindtap="collect">日历</text>
+  </picker>  
+  <text animation="{{animationTranspond}}" class="image-style" bindtap="transpond">收藏</text>
+  <!--<text animation="{{animationInput}}" class="image-style" bindtap="input">input</text>-->
+  <text animation="{{animationPlus}}" class="image-plus-style"bindtap="plus">更多</text>
 </view>

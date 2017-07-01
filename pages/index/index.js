@@ -9,6 +9,13 @@ Page({
     interval: 5000,
     duration: 10,
     date: "",
+
+    isPopping: false,//是否已经弹出
+    animationPlus: {},//旋转动画
+    animationcollect: {},//item位移,透明度
+    animationTranspond: {},//item位移,透明度
+    animationInput: {},//item位移,透明度
+
     banners: [
       {
         "image": "https:\/\/pic3.zhimg.com\/v2-b544b0cf4a806b45748756b50ea5043e.jpg",
@@ -74,23 +81,6 @@ Page({
         "id": 9501364,
         "ga_prefix": "070109",
         "title": "乔布斯创造了 iPhone，也放任死神夺走了自己生命"
-      }, {
-        "images": [
-          "https:\/\/pic1.zhimg.com\/v2-80d33b0bd5ce6f693304819ba1b1fdb0.jpg"
-        ],
-        "type": 0,
-        "id": 9494694,
-        "ga_prefix": "070111",
-        "title": "编剧：照着原著写「午时三刻砍头」，怎么我又错了？"
-      },
-      {
-        "images": [
-          "https:\/\/pic3.zhimg.com\/v2-bb76d3a1488762bf6ec6f1efdfda5cc6.jpg"
-        ],
-        "type": 0,
-        "id": 9500610,
-        "ga_prefix": "070110",
-        "title": "- 谁是母系社会的敌人？\r\n- 牛"
       },
       {
         "images": [
@@ -103,21 +93,30 @@ Page({
       },
       {
         "images": [
-          "https:\/\/pic1.zhimg.com\/v2-80d33b0bd5ce6f693304819ba1b1fdb0.jpg"
+          "https:\/\/pic2.zhimg.com\/v2-0c605ca6dde4fafff29b0ca412ee4469.jpg"
         ],
         "type": 0,
-        "id": 9494694,
-        "ga_prefix": "070111",
-        "title": "编剧：照着原著写「午时三刻砍头」，怎么我又错了？"
+        "id": 9501364,
+        "ga_prefix": "070109",
+        "title": "乔布斯创造了 iPhone，也放任死神夺走了自己生命"
       },
       {
         "images": [
-          "https:\/\/pic3.zhimg.com\/v2-bb76d3a1488762bf6ec6f1efdfda5cc6.jpg"
+          "https:\/\/pic2.zhimg.com\/v2-0c605ca6dde4fafff29b0ca412ee4469.jpg"
         ],
         "type": 0,
-        "id": 9500610,
-        "ga_prefix": "070110",
-        "title": "- 谁是母系社会的敌人？\r\n- 牛"
+        "id": 9501364,
+        "ga_prefix": "070109",
+        "title": "乔布斯创造了 iPhone，也放任死神夺走了自己生命"
+      },
+      {
+        "images": [
+          "https:\/\/pic2.zhimg.com\/v2-0c605ca6dde4fafff29b0ca412ee4469.jpg"
+        ],
+        "type": 0,
+        "id": 9501364,
+        "ga_prefix": "070109",
+        "title": "乔布斯创造了 iPhone，也放任死神夺走了自己生命"
       },
       {
         "images": [
@@ -139,8 +138,8 @@ Page({
     wx.setNavigationBarTitle({
       title: app.data.title,
     })
-    this.index = 1
-  },
+    this.index = 1;    
+  }, 
   bindDateChange: function (e) {
     var date = e.detail.value;
     wx.navigateTo({
@@ -171,6 +170,34 @@ Page({
     const now = new Date()
     now.setDate(now.getDate() - this.index++)
     return now
+  },
+  onShow:function(){
+    
+  },
+  //点击弹出
+  plus: function () {
+    if (this.data.isPopping) {
+      //缩回动画
+      takeback.call(this);
+      this.setData({
+        isPopping: false
+      })
+    } else {
+      //弹出动画
+      popp.call(this);
+      this.setData({
+        isPopping: true
+      })
+    }
+  },
+  input: function () {
+    console.log("input")
+  },
+  transpond: function () {
+    console.log("transpond")
+  },
+  collect: function () {
+    console.log("collect")
   }
 })
 
@@ -183,5 +210,67 @@ function currentDate() {
     .getDate();
   var dateStr = year + "-" + month + "-" + day;
   return dateStr;
+}
+
+//弹出动画
+function popp() {
+  //plus顺时针旋转
+  var animationPlus = wx.createAnimation({
+    duration: 500,
+    timingFunction: 'ease-out'
+  })
+  var animationcollect = wx.createAnimation({
+    duration: 500,
+    timingFunction: 'ease-out'
+  })
+  var animationTranspond = wx.createAnimation({
+    duration: 500,
+    timingFunction: 'ease-out'
+  })
+  var animationInput = wx.createAnimation({
+    duration: 500,
+    timingFunction: 'ease-out'
+  })
+  animationPlus.step();
+  animationcollect.translate(-10, -40).opacity(0.7).step();
+  animationTranspond.translate(-40, -10).opacity(0.7).step();
+  animationInput.translate(-60, 20).opacity(0.7).step();
+  this.setData({
+    animationPlus: animationPlus.export(),
+    animationcollect: animationcollect.export(),
+    animationTranspond: animationTranspond.export(),
+    animationInput: animationInput.export(),
+  })
+}
+
+//收回动画
+function takeback() {
+  //plus逆时针旋转
+  var animationPlus = wx.createAnimation({
+    duration: 500,
+    timingFunction: 'ease-out'
+  })
+  var animationcollect = wx.createAnimation({
+    duration: 500,
+    timingFunction: 'ease-out'
+  })
+  var animationTranspond = wx.createAnimation({
+    duration: 500,
+    timingFunction: 'ease-out'
+  })
+  var animationInput = wx.createAnimation({
+    duration: 500,
+    timingFunction: 'ease-out'
+  })
+  animationPlus.rotateZ(0).step();
+  animationcollect.translate(0, 0).rotateZ(0).opacity(0).step();
+  animationTranspond.translate(0, 0).rotateZ(0).opacity(0).step();
+  animationInput.translate(0, 0).rotateZ(0).opacity(0).step();
+  this.setData({
+    animationPlus: animationPlus.export(),
+    animationcollect: animationcollect.export(),
+    animationTranspond: animationTranspond.export(),
+    animationInput: animationInput.export(),
+  })
 }
 
