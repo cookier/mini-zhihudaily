@@ -1,0 +1,18 @@
+<!--before.wxml-->
+<view class="container">
+  <view class="news-item-container">
+    <block wx:for="{{list}}" wx:key="id">
+      <text wx:if="{{item.header}}" class="sub-title">{{item.header}}</text>
+      <navigator wx:else url="../detail/detail?id={{item.id}}">
+        <view class="news-item">
+          <view class="news-item-left">
+            <text>{{item.title}}</text>
+          </view>
+          <view class="news-item-right">
+            <image src="{{item.images[0]}}"></image>
+          </view>
+        </view>
+      </navigator>
+    </block>
+  </view>
+</view>

@@ -1,0 +1,30 @@
+<!--index.wxml-->
+<view class="container">
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" class="banners" interval="{{interval}}" duration="{{duration}}">
+    <block wx:for="{{banners}}" wx:key="id">
+      <swiper-item class="banner">
+        <image src="{{item.image}}" data-id="{{item.id}}" bindtap="bindViewTap" class="banner-image" />
+        <text class="banner-title">{{item.title}}</text>
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class="news-item-container">
+    <block wx:for="{{list}}" wx:key="id">
+      <text wx:if="{{item.header}}" class="sub-title">{{item.header}}</text>
+      <navigator wx:else url="../detail/detail?id={{item.id}}">
+        <view class="news-item">
+          <view class="news-item-left">
+            <text>{{item.title}}</text>
+          </view>
+          <view class="news-item-right">
+            <image src="{{item.images[0]}}"></image>
+          </view>
+        </view>
+      </navigator>
+    </block>
+  </view>
+  <!--日期选择-->
+  <picker mode="date" start="2013-05-20" end="2017-09-01" bindchange="bindDateChange">
+    <view class="picker-toggle"> 日历 </view>
+  </picker>
+</view>
