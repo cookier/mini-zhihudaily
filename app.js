@@ -17,16 +17,19 @@ App({
     } else {
       //调用登录接口
       wx.getUserInfo({
-        withCredentials: false,
-        success: function (res) {
-          that.globalData.userInfo = res.userInfo
+        withCredentials: true,
+        success: function (res) {               
+          that.globalData.userInfo = res.userInfo;
+          console.log(11111);
+          console.log(res);
           typeof cb == "function" && cb(that.globalData.userInfo)
         }
       })
     }
   },
-
   globalData: {
-    userInfo: null
+    userInfo: null,
+    hasLogin: false,
+    openid: null
   }
 })

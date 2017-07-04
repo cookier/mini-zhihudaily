@@ -8,7 +8,7 @@ Page({
     autoplay: true,
     interval: 5000,
     duration: 10,
-    date: "",
+    currentDate: "",
 
     isPopping: false,//是否已经弹出
     animationPlus: {},//旋转动画
@@ -138,8 +138,11 @@ Page({
     wx.setNavigationBarTitle({
       title: app.data.title,
     })
-    this.index = 1;    
-  }, 
+    this.index = 1;
+    this.setData({
+      currentDate: util.formatDate(new Date(), "-")
+    })
+  },
   bindDateChange: function (e) {
     var date = e.detail.value;
     wx.navigateTo({
@@ -171,8 +174,16 @@ Page({
     now.setDate(now.getDate() - this.index++)
     return now
   },
-  onShow:function(){
-    
+  handleTopTap: function (event) {
+    if (event.target.id != "more") {
+      if (this.data.isPopping) {
+        //缩回动画
+        takeback.call(this);
+        this.setData({
+          isPopping: false
+        })
+      }
+    }
   },
   //点击弹出
   plus: function () {
@@ -193,8 +204,24 @@ Page({
   input: function () {
     console.log("input")
   },
-  transpond: function () {
-    console.log("transpond")
+  collectList: function () {
+    if (!app.globalData.hasLogin) {
+      wx.login({
+        success: function (res) {
+          console.log(res);
+          if (res.code) {
+            //发起网络请求     
+            app.getUserInfo(function () {
+              console.log("app.globalData.userInfo");
+              console.log(app.globalData.userInfo);
+            });
+
+          } else {
+            console.log('获取用户登录态失败！' + res.errMsg)
+          }
+        }
+      });
+    }
   },
   collect: function () {
     console.log("collect")

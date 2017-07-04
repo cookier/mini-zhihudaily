@@ -1,11 +1,13 @@
 <!--index.wxml-->
-<view class="container">
-  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" class="banners" interval="{{interval}}" duration="{{duration}}">
+<view class="container" bindtap="handleTopTap">
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" class="banners" interval="{{interval}}" duration="{{duration}}" bindchange="handleTopTap">
     <block wx:for="{{banners}}" wx:key="id">
-      <swiper-item class="banner">
-        <image src="{{item.image}}" data-id="{{item.id}}" bindtap="bindViewTap" class="banner-image" />
-        <text class="banner-title">{{item.title}}</text>
-      </swiper-item>
+      <navigator url="../detail/detail?id={{item.id}}">
+        <swiper-item class="banner">
+          <image src="{{item.image}}" data-id="{{item.id}}" bindtap="bindViewTap" class="banner-image" />
+          <text class="banner-title">{{item.title}}</text>
+        </swiper-item>
+      </navigator>
     </block>
   </swiper>
   <view class="news-item-container">
@@ -24,13 +26,11 @@
     </block>
   </view>
   <!--日期选择-->
-  <picker mode="date" start="2013-05-20" end="2017-09-01" bindchange="bindDateChange">
-    <view class="picker-toggle"> 日历 </view>
-  </picker>
-  <picker mode="date" start="2013-05-20" end="2017-09-01" bindchange="bindDateChange">
+  <picker mode="date" start="2013-05-20" end="{{currentDate}}" bindchange="bindDateChange">
     <text animation="{{animationcollect}}" class="image-style" bindtap="collect">日历</text>
-  </picker>  
-  <text animation="{{animationTranspond}}" class="image-style" bindtap="transpond">收藏</text>
+  </picker>
+  <text animation="{{animationTranspond}}" class="image-style" bindtap="collectList">收藏</text>
   <!--<text animation="{{animationInput}}" class="image-style" bindtap="input">input</text>-->
-  <text animation="{{animationPlus}}" class="image-plus-style"bindtap="plus">更多</text>
+  <text id="more" animation="{{animationPlus}}" class="image-plus-style" bindtap="plus">更多</text>
+
 </view>
